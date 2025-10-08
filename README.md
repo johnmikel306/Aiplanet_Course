@@ -1,117 +1,133 @@
-# RAG Pipeline with BeyondLLM (AI_Planet RAG BootCamp Course)
+# Simple RAG Chat with BeyondLLM
 
-**RAG Pipeline with BeyondLLM** is a Retrieval-Augmented Generation (RAG) application that utilizes BeyondLLM’s robust capabilities for embedding, retrieval, and language model interaction to provide intelligent responses based on a user-defined context.
+A super simple Retrieval-Augmented Generation (RAG) chatbot that lets you chat with **YouTube videos** or **uploaded files** using Google's Gemini AI. Everything is configured directly in the UI - no .env files needed!
+
+## ✨ Features
+
+- 🎥 **YouTube Video Support** - Chat with any YouTube video
+- 📄 **File Upload Support** - Upload PDF, TXT, MD, DOC, or DOCX files
+- 🔑 **UI-Based Setup** - Enter API key directly in the app (no .env file required!)
+- 💬 **Modern Chat Interface** - Clean, ChatGPT-like experience
+- 🤖 **Powered by Google Gemini** - Uses Gemini 2.5 Flash Lite for fast, intelligent responses
+- 📝 **Chat History** - Maintains full conversation context
+- 🔄 **Easy Reset** - Start over with one click
+- 🎨 **Super Simple** - No complex configuration required
+
+## 🚀 Quick Start
+
+### 1. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 2. Run the App
+
+```bash
+streamlit run Streamlit_app.py
+```
+
+### 3. Setup in the UI
+
+1. **Get API Key**: Visit [Google AI Studio](https://makersuite.google.com/app/apikey) to get a free API key
+2. **Enter API Key**: Paste it in the password field in the app
+3. **Choose Source**: Select "YouTube Video" or "Upload File"
+4. **Provide Content**: 
+   - For YouTube: Paste the video URL
+   - For File: Upload your document (PDF, TXT, MD, DOC, DOCX)
+5. **Click "Start Chat"**: Wait for initialization (takes a few seconds)
+6. **Ask Questions**: Start chatting with your content!
+
+## 📖 How to Use
+
+### With YouTube Videos
+
+1. Copy any YouTube URL (e.g., `https://www.youtube.com/watch?v=dQw4w9WgXcQ`)
+2. Select "YouTube Video" option
+3. Paste the URL
+4. Click "Start Chat"
+5. Ask questions about the video content
+
+**Example Questions:**
+- "What is this video about?"
+- "Summarize the main points"
+- "What does the speaker say about [topic]?"
+
+### With Files
+
+1. Prepare your file (PDF, TXT, MD, DOC, or DOCX)
+2. Select "Upload File" option
+3. Upload your file
+4. Click "Start Chat"
+5. Ask questions about the document content
+
+**Example Questions:**
+- "What are the key points in this document?"
+- "Explain [specific topic] from the file"
+- "Summarize this document"
+
+## 🛠️ Requirements
+
+- Python 3.8 or higher
+- Google API Key (free from [Google AI Studio](https://makersuite.google.com/app/apikey))
+
+## 📦 Dependencies
+
+All dependencies are in `requirements.txt`:
+- `streamlit>=1.28.0` - Web interface
+- `beyondllm>=0.2.0` - RAG framework
+- `python-dotenv>=1.0.0` - Environment variables (optional)
+
+## 🎯 How It Works
+
+1. **Content Loading**: The app loads your YouTube video or uploaded file
+2. **Chunking**: Content is split into manageable chunks
+3. **Embedding**: Chunks are converted to vector embeddings using Gemini
+4. **Retrieval**: When you ask a question, relevant chunks are retrieved
+5. **Generation**: Gemini 2.5 Flash Lite generates an answer based on the retrieved context
+
+## 🔄 Reset and Start Over
+
+Click the "🔄 Start Over" button in the sidebar to:
+- Clear chat history
+- Reset the pipeline
+- Choose a new content source
+
+## 🆘 Troubleshooting
+
+### "API key not found" error
+- Make sure you entered your Google API key in the text field
+- Get a free key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+
+### "Error loading content" message
+- For YouTube: Check that the URL is valid and the video has captions/transcript
+- For Files: Ensure the file format is supported (PDF, TXT, MD, DOC, DOCX)
+
+### Slow initialization
+- First-time loading takes 10-30 seconds (normal)
+- YouTube videos with long transcripts take longer
+- Large files take longer to process
+
+### No response or error during chat
+- Check your internet connection
+- Verify your API key is valid
+- Try clicking "Start Over" and reinitializing
+
+## 📚 Learn More
+
+- [BeyondLLM Documentation](https://beyondllm.aiplanet.com/)
+- [Streamlit Documentation](https://docs.streamlit.io/)
+- [Google AI Studio](https://makersuite.google.com/app/apikey)
+
+## 🎓 Built With
+
+- **Streamlit** - Web framework
+- **BeyondLLM** - RAG framework
+- **Google Gemini** - LLM and embeddings
+- **Python** - Programming language
 
 ---
 
-## Features
+**Made simple for everyone!** 🚀
 
-- **Retrieval-Augmented Generation (RAG)**:
-  Combines document retrieval and AI generation to answer user queries accurately and contextually.
-  
-- **Source Extraction**:
-  Processes and chunks content from URLs or documents.
-
-- **Custom Embeddings**:
-  Leverages the `GeminiEmbeddings` model for creating embeddings with fine-tuned similarity search.
-
-- **Retriever System**:
-  Efficiently retrieves the most relevant data for a query using `auto_retriever`.
-
-- **LLM Integration**:
-  Incorporates Gemini LLM for coherent, customer-service-oriented responses.
-
-- **Session Memory**:
-  Implements a chat memory buffer to retain the context of recent user interactions.
-
----
-
-## Requirements
-
-### API Key
-This application requires a **Google API Key** for accessing Gemini models and embeddings. The key should be stored in a `.env` file.
-
----
-
-## Setup
-
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd <repository-directory>
-   ```
-
-2. Create a `.env` file in the root directory with your Google API Key:
-   ```env
-   GOOGLE_API_KEY=your_google_api_key
-   ```
-
-3. Install the required Python packages:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. Run the application:
-   ```bash
-   streamlit run app.py
-   ```
-
----
-
-## How It Works
-
-1. **Source Extraction**:
-   - The app processes content from the provided URL (e.g., YouTube video) using `source.fit`.
-   
-2. **Embedding Creation**:
-   - Generates text embeddings using the Gemini Embeddings API for effective similarity search.
-
-3. **Data Retrieval**:
-   - Implements an `auto_retriever` to fetch the most relevant pieces of information based on user queries.
-
-4. **Language Model Interaction**:
-   - Utilizes the Gemini LLM for query responses, guided by a customer-support-oriented system prompt.
-
-5. **Chat Memory**:
-   - Retains the last three interactions using `ChatBufferMemory` for continuity in multi-turn conversations.
-
----
-
-## Usage
-
-1. Start the application:
-   - Open the app in your browser after running the Streamlit command.
-
-2. Submit a query:
-   - Enter a question into the text input field and click **Submit**.
-
-3. Get AI-generated responses:
-   - View the customer-support-style response based on the context retrieved from the source data.
-
-4. Interact dynamically:
-   - Use follow-up queries, and the memory system will ensure contextual continuity.
-
----
-
-## Dependencies
-
-- [Streamlit](https://streamlit.io/)
-- [BeyondLLM](https://github.com/beyondllm)
-- [Python-dotenv](https://pypi.org/project/python-dotenv/)
-- Python 3.8+
-
----
-
-## Contributing
-
-Contributions are welcome! Please fork the repository, create a feature branch, and submit a pull request.
-
----
-
-## License
-
-This project is licensed under the MIT License.
-
----
-
-Explore how RAG pipelines can revolutionize customer support with AI! 🚀
+No complex setup, no configuration files, just run and chat!
