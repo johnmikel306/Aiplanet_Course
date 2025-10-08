@@ -1,7 +1,27 @@
 import streamlit as st
-from beyondllm import source, retrieve, embeddings, llms, generator
 import os
 import tempfile
+
+# Configure NLTK data path for Streamlit Cloud
+import nltk
+nltk_data_dir = os.path.join(tempfile.gettempdir(), 'nltk_data')
+os.makedirs(nltk_data_dir, exist_ok=True)
+nltk.data.path.append(nltk_data_dir)
+
+# Download required NLTK data
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt', download_dir=nltk_data_dir, quiet=True)
+    nltk.download('punkt_tab', download_dir=nltk_data_dir, quiet=True)
+
+try:
+    nltk.data.find('corpora/stopwords')
+except LookupError:
+    nltk.download('stopwords', download_dir=nltk_data_dir, quiet=True)
+
+# Now import beyondllm after NLTK is configured
+from beyondllm import source, retrieve, embeddings, llms, generator
 
 # Page configuration
 st.set_page_config(
